@@ -12,6 +12,7 @@ interface GetDetailType {
   }[];
 }
 
+// get NFT detail info
 const getDetail = async (): Promise<GetDetailType> => {
   return await {
     id: "4230780345",

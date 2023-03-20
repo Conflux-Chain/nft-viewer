@@ -112,7 +112,7 @@ export default () => {
     () => (
       <div className="grid grid-cols-2 gap-3">
         {data.attributes?.map((a) => (
-          <div className="card small m-0">
+          <div className="card small m-0" key={a.value}>
             <div className="font-12">{a.trait_type}</div>
             <div className="font-14 color-[#1A191B] mt-1">{a.value}</div>
           </div>

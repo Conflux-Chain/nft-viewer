@@ -5,6 +5,7 @@ import App from "./App";
 import Detail from "./pages/Detail";
 import Profile from "./pages/Profile";
 import Error from "./pages/Error";
+import Certificate from "./pages/Certificate";
 
 import "./index.css";
 import "@cubed/nftviewer/dist/style.css";
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "detail",
         element: <Detail />,
+      },
+      {
+        path: "certificate",
+        element: <Certificate />,
       },
       {
         path: "profile",

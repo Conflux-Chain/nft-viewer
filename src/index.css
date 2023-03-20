@@ -55,7 +55,7 @@
   }
 
   .tabs-title {
-    @apply font-18 cursor-pointer font-normal;
+    @apply font-18 font-normal;
     color: #999999;
   }
   .tabs-title.active {
