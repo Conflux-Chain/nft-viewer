@@ -10,6 +10,7 @@ interface DetailType {
     value: string;
     trait_type: string;
   }[];
+  amount?: number;
 }
 
 interface ProfileType {
@@ -17,6 +18,28 @@ interface ProfileType {
   address: string;
   name?: string;
 }
+
+const getCertificates = async (
+  account: string
+): Promise<Partial<DetailType>[]> => {
+  return [
+    "4230780341",
+    "4230780342",
+    "4230780343",
+    "4230780344",
+    "4230780345",
+    "4230780346",
+  ].map((id) => ({
+    id,
+    url: "https://www.nftrainbow.cn/resources/images/game.png",
+    name: "NFTRainbow 吉祥物",
+    description: "龙马祥瑞，口吐成桥🌈，将 NFT 带给每一个人",
+    series: "NFTRainbow 纪念 POAP",
+    owner: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
+    contract: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
+    amount: 200,
+  }));
+};
 
 const getNFTs = async (account: string): Promise<Partial<DetailType>[]> => {
   return [
@@ -114,4 +137,11 @@ const getDetail = async (
   // }.data;
 };
 
-export { getDetail, type DetailType, getProfile, type ProfileType, getNFTs };
+export {
+  getDetail,
+  type DetailType,
+  getProfile,
+  type ProfileType,
+  getNFTs,
+  getCertificates,
+};

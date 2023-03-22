@@ -7,12 +7,15 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    colors: {
-      ...colors,
-      // custom colors
-      cBlack: '#1a191b'
-    }
+    extend: {
+      dropShadow: {
+        one: '0px 6px 16px rgba(0, 0, 0, 0.08)',
+        two: 'inset 0px 6px 16px rgba(0, 0, 0, 0.08)'
+      },
+      colors: {
+        cBlack: '#1a191b'
+      }
+    },
   },
   plugins: [],
 }

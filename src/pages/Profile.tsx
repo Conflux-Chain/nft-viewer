@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 export default () => {
   const { account } = useParams();
   const [data, setData] = useState({} as ProfileType);
-  const [key, setKey] = useState<string>("about");
+  const [key, setKey] = useState<string>("certificates");
 
   useEffect(() => {
     async function main() {
@@ -30,9 +30,9 @@ export default () => {
         children: <NFTs account={account}></NFTs>,
       },
       {
-        key: "attributes",
+        key: "certificates",
         label: "其他凭证",
-        children: <Certificates></Certificates>,
+        children: <Certificates account={account}></Certificates>,
       },
     ],
     [account]
