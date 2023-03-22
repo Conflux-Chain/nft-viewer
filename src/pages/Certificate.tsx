@@ -1,17 +1,21 @@
 import NFTViewer from "@cubed/nftviewer";
 import { useEffect, useMemo, useState } from "react";
-import { getDetail, type GetDetailType } from "../utils/request";
+import { getDetail, type DetailType } from "../utils/request";
 import NFTViewerContainer from "../components/NFTViewerContainer";
 import { formatAddress } from "../utils";
 import { NETWORK } from "../utils/const";
+import { useParams } from "react-router-dom";
 
 export default () => {
-  const [data, setData] = useState({} as GetDetailType);
+  const { contract, tokenId } = useParams();
+  const [data, setData] = useState({} as DetailType);
 
   useEffect(() => {
     async function main() {
-      const data: GetDetailType = await getDetail();
-      setData(data);
+      if (contract && tokenId !== undefined) {
+        const data: DetailType = await getDetail(contract, tokenId);
+        setData(data);
+      }
     }
 
     main().catch(console.log);

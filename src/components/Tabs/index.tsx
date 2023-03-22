@@ -7,6 +7,7 @@ interface Props {
   defaultActiveKey?: string;
   activeKey?: string;
   onChange?: (key: string) => void;
+  type?: "center" | "left";
 }
 
 export default ({
@@ -14,14 +15,17 @@ export default ({
   defaultActiveKey,
   activeKey,
   onChange = () => {},
+  type = "center",
 }: Props) => {
+  const justify = type === "center" ? "justify-around" : "";
+
   return (
     <div>
-      <div className="mb-4 flex justify-around">
+      <div className={`mb-4 flex ${justify}`}>
         {items.map((t) => (
           <span
             key={t.key}
-            className={`tabs-title ${
+            className={`tabs-title ${type} ${
               t.key === (activeKey || defaultActiveKey) ? "active" : ""
             }`}
             onClick={() => onChange(t.key)}

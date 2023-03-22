@@ -1,4 +1,4 @@
-interface GetDetailType {
+interface DetailType {
   id: string;
   url: string;
   name: string;
@@ -6,16 +6,52 @@ interface GetDetailType {
   series: string;
   owner: string;
   contract: string;
-  attributes: {
+  attributes?: {
     value: string;
     trait_type: string;
   }[];
 }
 
-// get NFT detail info
-const getDetail = async (): Promise<GetDetailType> => {
+interface ProfileType {
+  avatar?: string;
+  address: string;
+  name?: string;
+}
+
+const getNFTs = async (account: string): Promise<Partial<DetailType>[]> => {
+  return [
+    "4230780341",
+    "4230780342",
+    "4230780343",
+    "4230780344",
+    "4230780345",
+    "4230780346",
+  ].map((id) => ({
+    id,
+    url: "https://www.nftrainbow.cn/resources/images/game.png",
+    name: "NFTRainbow 吉祥物",
+    description: "龙马祥瑞，口吐成桥🌈，将 NFT 带给每一个人",
+    series: "NFTRainbow 纪念 POAP",
+    owner: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
+    contract: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
+    attributes: [],
+  }));
+};
+
+const getProfile = async (address: string): Promise<ProfileType> => {
   return await {
-    id: "4230780345",
+    address: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
+    name: "NFTRainbow.web3",
+  };
+};
+
+// get NFT detail info
+const getDetail = async (
+  contract: string,
+  tokenId: string
+): Promise<DetailType> => {
+  return await {
+    id: tokenId,
     url: "https://www.nftrainbow.cn/resources/images/game.png",
     name: "NFTRainbow 吉祥物",
     description: "龙马祥瑞，口吐成桥🌈，将 NFT 带给每一个人",
@@ -78,4 +114,4 @@ const getDetail = async (): Promise<GetDetailType> => {
   // }.data;
 };
 
-export { getDetail, type GetDetailType };
+export { getDetail, type DetailType, getProfile, type ProfileType, getNFTs };

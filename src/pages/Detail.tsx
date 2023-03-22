@@ -1,26 +1,27 @@
-import { Link } from "react-router-dom";
 import NFTViewer from "@cubed/nftviewer";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getDetail, type GetDetailType } from "../utils/request";
+import { getDetail, type DetailType } from "../utils/request";
 import NFTViewerContainer from "../components/NFTViewerContainer";
 import { formatAddress } from "../utils";
 import { NETWORK } from "../utils/const";
 import Tab from "../components/Tabs";
+import { useParams } from "react-router-dom";
 
 export default () => {
-  const [data, setData] = useState({} as GetDetailType);
+  const { contract, tokenId } = useParams();
+  const [data, setData] = useState({} as DetailType);
   const [key, setKey] = useState<string>("about");
 
   useEffect(() => {
     async function main() {
-      const data: GetDetailType = await getDetail();
-      setData(data);
+      if (contract && tokenId !== undefined) {
+        const data: DetailType = await getDetail(contract, tokenId);
+        setData(data);
+      }
     }
 
     main().catch(console.log);
   }, []);
-
-  console.log("data: ", data);
 
   const NFT_CARD = useMemo(
     () => (
@@ -152,51 +153,5 @@ export default () => {
     setKey(key);
   }, []);
 
-  return (
-    <>
-      <Tab items={ITEMS} activeKey={key} onChange={handleTabsChange}></Tab>
-
-      {/* <NFTViewerContainer>
-        <NFTViewer url={data.url}></NFTViewer>
-      </NFTViewerContainer> */}
-
-      {/* <div className="card">
-        <div className="title mb-2">{data.name}</div>
-        <div>
-          <span className="tag mr-2">#{data.id}</span>
-          <span className="tag badge">树图标准数字藏品</span>
-        </div>
-      </div>
-      <div className="card">
-        <div className="title">关于藏品</div>
-        <ul>
-          {aboutItems.map((t) => (
-            <li key={t.key} className="mt-4 flex flex-row">
-              <span className="subtitle basis-5/12">{t.name}</span>
-              <span className="basis-7/12">{t.value}</span>
-            </li>
-          ))}
-        </ul>
-      </div> */}
-
-      {/* <div className="card">
-        <div className="title">描述</div>
-        <div className="subtitle mt-4">{data.description}</div>
-      </div> */}
-
-      {/* <div className="grid grid-cols-2 gap-3">
-        {data.attributes?.map((a) => (
-          <div className="card small m-0">
-            <div className="font-12">{a.trait_type}</div>
-            <div className="font-14 color-[#1A191B] mt-1">{a.value}</div>
-          </div>
-        ))}
-      </div> */}
-
-      {/* <br></br>
-      <div>
-        Link to <Link to={`/profile`}>Profile Page</Link>
-      </div> */}
-    </>
-  );
+  return <Tab items={ITEMS} activeKey={key} onChange={handleTabsChange}></Tab>;
 };

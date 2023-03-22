@@ -8,12 +8,11 @@
   }
 
   .font-14 {
-    @apply text-sm font-normal not-italic;
-    line-height: 1.125rem;
+    @apply text-sm font-normal not-italic leading-[1.125rem];
   }
 
   .font-18 {
-    @apply text-lg font-medium not-italic leading-6 text-[#1a191b];
+    @apply text-lg font-medium not-italic leading-6 text-cBlack;
   }
 
   .card {
@@ -30,7 +29,7 @@
   }
 
   .title {
-    @apply text-base font-medium not-italic leading-5 text-[#1a191b];
+    @apply text-base font-medium not-italic leading-5 text-cBlack;
   }
 
   .subtitle {
@@ -42,10 +41,10 @@
   }
 
   .tag {
-    @apply font-14 relative inline-block break-all rounded-[0.9375rem] bg-[#1A191B] py-[0.1875rem] px-2 text-xs text-white;
+    @apply font-14 relative inline-block break-all rounded-[0.9375rem] bg-cBlack py-[0.1875rem] px-2 text-xs text-white;
   }
   .tag.badge {
-    @apply bg-[#D5D3FC] pl-2 text-[#1A191B];
+    @apply bg-[#D5D3FC] pl-2 text-cBlack;
   }
   .tag.badge::before {
     @apply float-left mr-0.5 mt-0.5 h-3 w-3;
@@ -54,17 +53,23 @@
     background-size: contain;
   }
 
+  /* type: center */
   .tabs-title {
-    @apply font-18 font-normal;
-    color: #999999;
+    @apply font-18 flex items-center font-normal text-[#999999];
   }
   .tabs-title.active {
-    @apply relative font-medium;
-    color: #1a191b;
+    @apply relative font-medium text-cBlack;
   }
   .tabs-title.active::after {
-    @apply absolute -bottom-1 left-1/2 h-[0.1875rem] w-5 -translate-x-1/2 rounded-sm bg-[#1a191b];
+    @apply absolute -bottom-1 left-1/2 h-[0.1875rem] w-5 -translate-x-1/2 rounded-sm bg-cBlack;
     content: "";
+  }
+  /* type: left */
+  .tabs-title.left {
+    @apply mr-6;
+  }
+  .tabs-title.left:not(.active) {
+    @apply font-14;
   }
 }
 

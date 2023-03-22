@@ -17,15 +17,15 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "detail",
+        path: "detail/:contract/:tokenId",
         element: <Detail />,
       },
       {
-        path: "certificate",
+        path: "certificate/:contract/:tokenId",
         element: <Certificate />,
       },
       {
-        path: "profile",
+        path: "profile/:account",
         element: <Profile />,
       },
     ],
