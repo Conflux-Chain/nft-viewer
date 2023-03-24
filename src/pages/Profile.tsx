@@ -4,12 +4,18 @@ import { formatAddress } from "../utils";
 import Tab from "../components/Tabs";
 import NFTs from "../components/NFTs";
 import Certificates from "../components/Certificates";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { PROFILE_ITEMS } from "../utils/const";
 
 export default () => {
+  const { pathname, search } = useLocation();
+  const navigate = useNavigate();
   const { account } = useParams();
   const [data, setData] = useState({} as ProfileType);
-  const [key, setKey] = useState<string>("certificates");
+
+  // use url search key
+  let key = new URLSearchParams(search).get("key") || "";
+  key = PROFILE_ITEMS.includes(key) ? key : PROFILE_ITEMS[0];
 
   useEffect(() => {
     async function main() {
@@ -25,7 +31,7 @@ export default () => {
   const ITEMS = useMemo(
     () => [
       {
-        key: "about",
+        key: "nfts",
         label: "数字藏品",
         children: <NFTs account={account}></NFTs>,
       },
@@ -38,13 +44,19 @@ export default () => {
     [account]
   );
 
-  const handleTabsChange = useCallback((key: string) => {
-    setKey(key);
-  }, []);
+  const handleTabsChange = useCallback(
+    (key: string) => {
+      const query = new URLSearchParams(search);
+      query.set("key", key);
+
+      navigate(`${pathname}?${query.toString()}`);
+    },
+    [pathname, search]
+  );
 
   return (
     <>
-      <div className="mb-5 flex">
+      <div className="my-5 flex">
         <img
           src="/avatar-default.svg"
           className="mr-3 h-[3.75rem] w-[3.75rem] rounded-md"

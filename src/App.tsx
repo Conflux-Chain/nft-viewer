@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+import ScrollToTop from "./components/ScrollToTop";
 
 const MAX_WIDTH = 768; // support for max viewport width
 const REM_RATIO = 23.4375;
@@ -24,7 +26,16 @@ function App() {
       window.removeEventListener("orientationchange", init);
     };
   }, []);
-  return <Outlet />;
+
+  return (
+    <>
+      <Header></Header>
+      <div className="mt-5">
+        <Outlet />
+      </div>
+      <ScrollToTop></ScrollToTop>
+    </>
+  );
 }
 
 export default App;

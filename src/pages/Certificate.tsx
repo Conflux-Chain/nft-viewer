@@ -1,12 +1,12 @@
 import NFTViewer from "@cubed/nftviewer";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, memo } from "react";
 import { getDetail, type DetailType } from "../utils/request";
 import NFTViewerContainer from "../components/NFTViewerContainer";
 import { formatAddress } from "../utils";
 import { NETWORK } from "../utils/const";
 import { useParams } from "react-router-dom";
 
-export default () => {
+export default memo((): JSX.Element => {
   const { contract, tokenId } = useParams();
   const [data, setData] = useState({} as DetailType);
 
@@ -106,4 +106,4 @@ export default () => {
       {DESCRIPTION_CARD}
     </>
   );
-};
+});

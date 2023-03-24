@@ -23,7 +23,7 @@ const NFTs: React.FC<{ account: string | undefined }> = ({ account }) => {
   }, [account]);
 
   return (
-    <div className="grid grid-cols-2 gap-[0.9375rem]">
+    <div className="grid grid-cols-2 gap-[0.9375rem] pt-1">
       {data.map((d) => (
         <div className="m-0 p-0" key={d.id}>
           <NFTViewerContainer>
@@ -34,7 +34,7 @@ const NFTs: React.FC<{ account: string | undefined }> = ({ account }) => {
             state={{
               account,
               from: "profile",
-              type: "NFT", // may be NFT or certificate
+              type: "nfts", // may be nft or certificate
             }}
           >
             <div className="font-14 color-cBlack mt-3 font-medium leading-[1.125rem]">

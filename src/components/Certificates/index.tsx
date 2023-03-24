@@ -24,7 +24,7 @@ const Certificates: React.FC<{ account: string | undefined }> = ({
   }, [account]);
 
   return (
-    <div className="grid grid-cols-1 gap-[0.9375rem]">
+    <div className="grid grid-cols-1 gap-[0.9375rem] pt-1">
       {data.map((d) => (
         <div className="m-0 flex rounded-lg bg-white p-0" key={d.id}>
           <div
@@ -80,11 +80,11 @@ const Certificates: React.FC<{ account: string | undefined }> = ({
           </div> */}
           <div className="p-2">
             <Link
-              to={`/detail/${d.contract}/${d.id}`}
+              to={`/certificate/${d.contract}/${d.id}`}
               state={{
                 account,
                 from: "profile",
-                type: "NFT", // may be NFT or certificate
+                type: "certificates", // may be nft or certificate
               }}
             >
               <div className="font-14 color-cBlack mt-2 font-medium leading-[1.125rem]">
