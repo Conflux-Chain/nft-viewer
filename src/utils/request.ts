@@ -19,6 +19,48 @@ interface ProfileType {
   name?: string;
 }
 
+type NFTSetType = Pick<DetailType, "name" | "contract" | "id">;
+
+const getOwnedNFTSet = async (account: string): Promise<NFTSetType[]> => {
+  return await [
+    {
+      id: "1",
+      name: "Hypebeast",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a1",
+    },
+    {
+      id: "2",
+      name: "烤仔在香港",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a2",
+    },
+    {
+      id: "3",
+      name: "2023 守护神兔",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a3",
+    },
+    {
+      id: "4",
+      name: "NFTRainbow 纪念 POAP",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a4",
+    },
+    {
+      id: "5",
+      name: ".Web3 用户名创世 POAP",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a5",
+    },
+    {
+      id: "6",
+      name: "麦当劳数字魔方",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a6",
+    },
+    {
+      id: "7",
+      name: "麦当劳数字魔方",
+      contract: "cfx:acsc52gtsvn18my8sxc344ewt8fcnz43vevfcy29a7",
+    },
+  ];
+};
+
 const getCertificates = async (
   account: string
 ): Promise<Partial<DetailType>[]> => {
@@ -41,7 +83,12 @@ const getCertificates = async (
   }));
 };
 
-const getNFTs = async (account: string): Promise<Partial<DetailType>[]> => {
+const getNFTs = async (
+  account: string,
+  set: string[]
+): Promise<Partial<DetailType>[]> => {
+  // console.log("contract set: ", set);
+
   return [
     "4230780341",
     "4230780342",
@@ -144,4 +191,6 @@ export {
   type ProfileType,
   getNFTs,
   getCertificates,
+  getOwnedNFTSet,
+  type NFTSetType,
 };

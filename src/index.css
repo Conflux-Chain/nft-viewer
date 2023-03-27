@@ -71,6 +71,26 @@
   .tabs-title.left:not(.active) {
     @apply font-14;
   }
+
+  .button {
+    @apply font-14 inline-flex h-11 w-40 items-center justify-center rounded-full border-[0.0313rem];
+  }
+  .button.cancel {
+    @apply border-[#D2D2D2];
+  }
+  .button.confirm {
+    @apply border-cBlack bg-cBlack text-white;
+  }
+
+  .item {
+    @apply font-14 mt-3 flex h-[3.125rem] w-full flex-row items-center justify-start rounded-full border-[0.0313rem] border-[#D2D2D2] p-4 first:mt-0;
+  }
+  .item.control {
+    @apply mt-0 border-none bg-[#F5F5F5];
+  }
+  .item.selected {
+    @apply border-none bg-cBlack text-white;
+  }
 }
 
 html,
