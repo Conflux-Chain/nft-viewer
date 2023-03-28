@@ -1,0 +1,36 @@
+.search.rc-select {
+  .rc-select-selector {
+    @apply border-none h-full bg-[#F5F5F5] flex items-center pr-2 pl-8 font-12 flex-row justify-start flex-nowrap;
+
+    & > div {
+      & > div {
+        height: 1.625rem;
+      }
+      
+      .rc-select-selection-item {
+        @apply bg-cBlack text-white inline-flex h-full font-12 rounded-full justify-center items-center px-2;
+        margin-right: 0.125rem;
+      }
+
+      .rc-select-selection-item-remove {
+        @apply ml-2;
+      }
+
+      .rc-select-selection-overflow-item-suffix {
+        @apply flex items-center;
+      }
+    }
+
+    .rc-select-selection-overflow {
+      @apply max-w-full mr-1 overflow-auto flex-nowrap;
+
+      .rc-select-selection-search-input {
+        @apply bg-[#F5F5F5];
+      }
+    }
+
+    .rc-select-selection-placeholder {
+      @apply absolute;
+    }
+  }
+}

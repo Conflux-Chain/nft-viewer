@@ -62,8 +62,12 @@ const getOwnedNFTSet = async (account: string): Promise<NFTSetType[]> => {
 };
 
 const getCertificates = async (
-  account: string
+  account: string,
+  set: string[],
+  searchValue: string[]
 ): Promise<Partial<DetailType>[]> => {
+  console.log("getCertificates args: ", account, set, searchValue);
+
   return [
     "4230780341",
     "4230780342",
@@ -85,9 +89,10 @@ const getCertificates = async (
 
 const getNFTs = async (
   account: string,
-  set: string[]
+  set: string[],
+  searchValue: string[]
 ): Promise<Partial<DetailType>[]> => {
-  // console.log("contract set: ", set);
+  console.log("getNFTs args: ", account, set, searchValue);
 
   return [
     "4230780341",
