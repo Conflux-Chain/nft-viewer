@@ -74,7 +74,10 @@ const NFTs: React.FC<{ account: string | undefined }> = ({ account }) => {
   return (
     <>
       <div className="mb-4 flex">
-        <Search onChange={handleSearchChange}></Search>
+        <Search
+          onChange={handleSearchChange}
+          placeholder="请输入藏品 ID 或名称"
+        ></Search>
         <Filter
           items={NFTSet}
           selectedKeys={selectedKeys}

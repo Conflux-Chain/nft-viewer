@@ -77,7 +77,10 @@ const Certificates: React.FC<{ account: string | undefined }> = ({
   return (
     <>
       <div className="mb-4 flex">
-        <Search onChange={handleSearchChange}></Search>
+        <Search
+          onChange={handleSearchChange}
+          placeholder="请输入凭证 ID 或名称"
+        ></Search>
         <Filter
           items={NFTSet}
           selectedKeys={selectedKeys}
