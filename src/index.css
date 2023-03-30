@@ -25,7 +25,7 @@
 
   .nft-view-card {
     /* TODO replace rounded-3xl with rounded-2xl */
-    @apply card m-0 rounded-3xl p-0;
+    @apply card m-0 overflow-hidden rounded-3xl p-0;
   }
 
   .title {

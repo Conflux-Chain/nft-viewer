@@ -4,6 +4,7 @@ const NETWORKS = {
   1: {
     rpc: "",
     confluxscan: "https://www.confluxscan.net",
+    api: "https://api-stage.confluxscan.net", // TODO should replace with "https://api-testnet.confluxscan.net",
   },
 };
 

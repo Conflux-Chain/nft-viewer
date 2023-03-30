@@ -1,5 +1,6 @@
 import { publishRequestError } from "./index";
 import { RequestInit, RequestInfo, Response } from "node-fetch";
+import { NETWORK } from "./const";
 
 // TODO update type defination
 
@@ -9,7 +10,7 @@ type FetchWithAbortType = Partial<Promise<any>> & {
 
 type RequestInitWithTimeout = RequestInit & {
   timeout: number;
-  body: BodyInit | null | undefined;
+  body?: BodyInit | null | undefined;
 };
 
 const windowFetch = window.fetch;
@@ -149,4 +150,14 @@ const fetch = (url: RequestInfo, opts: RequestInitWithTimeout) => {
   );
 };
 
-export default fetch;
+const fetchWithPrefix = (url: string, opts?: RequestInitWithTimeout) => {
+  return fetch(
+    `${NETWORK.api}/${url}`,
+    opts || {
+      timeout: TIMEOUT_TIMESTAMP,
+    }
+  );
+};
+
+export default fetchWithPrefix;
+export { fetch };

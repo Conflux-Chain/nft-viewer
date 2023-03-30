@@ -1,4 +1,4 @@
-import { FORMAT_ADDRESS_CONFIG } from "./const";
+import { FORMAT_ADDRESS_CONFIG, NETWORK } from "./const";
 
 const publishRequestError = (opts: any, type?: string) => {
   console.log("publishRequestError: ", opts, type);

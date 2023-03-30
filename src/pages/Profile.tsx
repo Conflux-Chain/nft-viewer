@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { getProfile, type ProfileType } from "../utils/request";
 import { formatAddress } from "../utils";
 import Tab from "../components/Tabs";
@@ -7,11 +7,13 @@ import Certificates from "../components/Certificates";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { PROFILE_ITEMS } from "../utils/const";
 
-export default () => {
+const Proile = () => {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const { account } = useParams();
-  const [data, setData] = useState({} as ProfileType);
+  const [data, setData] = useState<ProfileType>({
+    address: account || "",
+  });
 
   // use url search key
   let key = new URLSearchParams(search).get("key") || "";
@@ -89,3 +91,5 @@ export default () => {
     </>
   );
 };
+
+export default memo(Proile);

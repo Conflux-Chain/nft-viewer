@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import {
   getNFTs,
-  type DetailType,
+  type GetNFTsType,
   getOwnedNFTSet,
   type NFTSetType,
+  getDetail,
+  type DetailType,
 } from "../../utils/request";
 import NFTViewerContainer from "../NFTViewerContainer";
 import NFTViewer from "@cubed/nftviewer";
@@ -11,8 +13,52 @@ import { Link } from "react-router-dom";
 import Search, { type SearchValueType } from "../Search";
 import Filter from "../Filter";
 
-const NFTs: React.FC<{ account: string | undefined }> = ({ account }) => {
-  const [NFTs, setNFTs] = useState<Partial<DetailType>[]>([]);
+const NFT = memo(
+  ({ data, account }: { data: any; account: string | undefined }) => {
+    console.log("data: ", data);
+
+    const [detail, setDetail] = useState<DetailType>({} as DetailType);
+
+    useEffect(() => {
+      async function main() {
+        const detail = await getDetail(data.contract, data.tokenId);
+        setDetail(detail);
+      }
+
+      main().catch(console.log);
+    }, [data]);
+
+    return (
+      <div className="m-0 p-0" key={`${detail.contract}-${detail.tokenId}`}>
+        <NFTViewerContainer>
+          <NFTViewer url={detail.url}></NFTViewer>
+        </NFTViewerContainer>
+        <Link
+          to={`/detail/${detail.contract}/${detail.id}`}
+          state={{
+            account,
+            from: "profile",
+            type: "nfts", // may be nft or certificate
+          }}
+        >
+          <div className="font-14 color-cBlack mt-3 font-medium leading-[1.125rem]">
+            {detail.name}
+          </div>
+        </Link>
+        <div className="font-12 mt-1">#{detail.id}</div>
+      </div>
+    );
+  }
+);
+
+const NFTsComponent: React.FC<{ account: string | undefined }> = ({
+  account,
+}) => {
+  const [NFTs, setNFTs] = useState<GetNFTsType>({
+    list: [],
+    next: 0,
+    total: 0,
+  });
   const [NFTSet, setNFTSet] = useState<NFTSetType[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<NFTSetType["contract"][]>(
     []
@@ -21,54 +67,42 @@ const NFTs: React.FC<{ account: string | undefined }> = ({ account }) => {
 
   const requestNFTs = useCallback(
     async (
-      account: string,
+      account: string | undefined,
       set: NFTSetType["contract"][],
       searchValue: SearchValueType
     ) => {
-      const NFTs = await getNFTs(account, set, searchValue);
-      setNFTs(NFTs);
+      if (account) {
+        const NFTs = await getNFTs(account, set, searchValue);
+        setNFTs(NFTs);
+      }
     },
     []
   );
 
-  const requestNFTSet = useCallback(async (account: string) => {
-    return await getOwnedNFTSet(account);
-  }, []);
-
   useEffect(() => {
     async function main() {
       if (account) {
-        const sets = await requestNFTSet(account);
+        const sets = await getOwnedNFTSet(account);
         const selectedKeys = sets.map((s) => s.contract);
 
         setNFTSet(sets);
         setSelectedKeys(selectedKeys);
 
-        if (selectedKeys.length) {
-          await requestNFTs(account, selectedKeys, []);
-        }
+        requestNFTs(account, selectedKeys, []);
       }
     }
 
     main().catch(console.log);
   }, [account]);
 
-  useEffect(() => {
-    async function main() {
-      account && (await requestNFTs(account, selectedKeys, searchValue));
-    }
-
-    main().catch(console.log);
-  }, [account, selectedKeys, searchValue]);
-
   const handleFilterChange = (keys: NFTSetType["contract"][]) => {
-    console.log("filter selected keys: ", keys);
     setSelectedKeys(keys);
+    requestNFTs(account, keys, searchValue);
   };
 
   const handleSearchChange = (value: string[]) => {
-    console.log("search value: ", value);
     setSearchValue(value);
+    requestNFTs(account, selectedKeys, value);
   };
 
   return (
@@ -85,29 +119,12 @@ const NFTs: React.FC<{ account: string | undefined }> = ({ account }) => {
         ></Filter>
       </div>
       <div className="grid grid-cols-2 gap-[0.9375rem]">
-        {NFTs.map((d) => (
-          <div className="m-0 p-0" key={d.id}>
-            <NFTViewerContainer>
-              <NFTViewer url={d.url}></NFTViewer>
-            </NFTViewerContainer>
-            <Link
-              to={`/detail/${d.contract}/${d.id}`}
-              state={{
-                account,
-                from: "profile",
-                type: "nfts", // may be nft or certificate
-              }}
-            >
-              <div className="font-14 color-cBlack mt-3 font-medium leading-[1.125rem]">
-                {d.name}
-              </div>
-            </Link>
-            <div className="font-12 mt-1">#{d.id}</div>
-          </div>
+        {NFTs.list.map((d) => (
+          <NFT data={d} account={account} />
         ))}
       </div>
     </>
   );
 };
 
-export default NFTs;
+export default memo(NFTsComponent);

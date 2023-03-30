@@ -100,12 +100,13 @@ export default () => {
   }, [data]);
 
   const DESCRIPTION_CARD = useMemo(
-    () => (
-      <div className="card">
-        <div className="title">描述</div>
-        <div className="subtitle mt-4">{data.description}</div>
-      </div>
-    ),
+    () =>
+      data.description ? (
+        <div className="card">
+          <div className="title">描述</div>
+          <div className="subtitle mt-4">{data.description}</div>
+        </div>
+      ) : null,
     [data]
   );
 
