@@ -70,40 +70,39 @@ interface GetNFTsType {
 
 const getNFTs = async (
   account: string,
-  set: string[],
-  searchValue: string[]
+  set: string[] = [],
+  searchValue: string[] = [],
+  skip: number = 0,
+  limit: number = 10,
+  withBrief: boolean = true
 ): Promise<GetNFTsType> => {
   console.log("getNFTs args: ", account, set, searchValue);
 
-  return await fetch(`/nft/tokens?owner=${account}&skip=0&limit=10`);
+  if (set.length) {
+    const sParams = new URLSearchParams(
+      `?owner=${account}&skip=${skip}&limit=${limit}&withBrief=${withBrief}`
+    );
 
-  // return {
-  //   list: [
-  //     "4230780341",
-  //     "4230780342",
-  //     "4230780343",
-  //     "4230780344",
-  //     "4230780345",
-  //     "4230780346",
-  //   ].map((id) => ({
-  //     id,
-  //     url: "https://www.nftrainbow.cn/resources/images/game.png",
-  //     name: "NFTRainbow 吉祥物",
-  //     description: "龙马祥瑞，口吐成桥🌈，将 NFT 带给每一个人",
-  //     series: "NFTRainbow 纪念 POAP",
-  //     owner: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
-  //     contract: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
-  //     attributes: [],
-  //   })),
-  //   next: 0,
-  //   total: 0,
-  // };
+    set.length &&
+      set.forEach((s) => {
+        sParams.append("contract", s);
+      });
+
+    return await fetch(`/nft/tokens?${sParams.toString()}`);
+  } else {
+    // if call /nft/tokens with no contract params, will throw error from backend
+    return {
+      list: [],
+      next: 0,
+      total: 0,
+    };
+  }
 };
 
 const getProfile = async (address: string): Promise<ProfileType> => {
   // TODO get cns name
   return await {
-    address: "cfx:aasc52gtsvn18my8sxc344ewt8fcnz43vevfcy29av",
+    address: address,
     name: "NFTRainbow.web3",
     avatar: "",
   };
@@ -114,15 +113,18 @@ const getDetail = async (
   contract: string,
   tokenId: string
 ): Promise<DetailType> => {
-  const detail = await fetch(
+  const detailReq = fetch(
     `/nft/preview?contract=${contract}&tokenId=${tokenId}`
   );
+  const tokenInfoReq = fetch(`/token/tokeninfo?contract=${contract}`);
+
+  const [detail, tokenInfo] = await Promise.all([detailReq, tokenInfoReq]);
 
   return {
     ...detail,
     id: tokenId,
     url: detail.image,
-    series: "",
+    series: tokenInfo.tokenName,
   };
 
   // // https://www.confluxscan.net/stat/nft/checker/detail?contractAddress=cfx%3Aachew68x34cwu04aezbunyaz67gppakvmyn79tau56&tokenId=401657

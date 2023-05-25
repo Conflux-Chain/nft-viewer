@@ -152,7 +152,7 @@ const fetch = (url: RequestInfo, opts: RequestInitWithTimeout) => {
 
 const fetchWithPrefix = (url: string, opts?: RequestInitWithTimeout) => {
   return fetch(
-    `${NETWORK.api}/${url}`,
+    `${NETWORK.api}${url}`,
     opts || {
       timeout: TIMEOUT_TIMESTAMP,
     }

@@ -1,10 +1,15 @@
-const NETWORK_ID = 1;
+const NETWORK_ID = 1029;
 
 const NETWORKS = {
   1: {
     rpc: "",
+    confluxscan: "https://testnet.confluxscan.net",
+    api: "https://api-testnet-stage.confluxscan.net", // TODO should be replace with https://api-testnet.confluxscan.net
+  },
+  1029: {
+    rpc: "",
     confluxscan: "https://www.confluxscan.net",
-    api: "https://api-stage.confluxscan.net", // TODO should replace with "https://api-testnet.confluxscan.net",
+    api: "https://api-stage.confluxscan.net",
   },
 };
 

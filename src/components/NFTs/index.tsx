@@ -15,26 +15,13 @@ import Filter from "../Filter";
 
 const NFT = memo(
   ({ data, account }: { data: any; account: string | undefined }) => {
-    console.log("data: ", data);
-
-    const [detail, setDetail] = useState<DetailType>({} as DetailType);
-
-    useEffect(() => {
-      async function main() {
-        const detail = await getDetail(data.contract, data.tokenId);
-        setDetail(detail);
-      }
-
-      main().catch(console.log);
-    }, [data]);
-
     return (
-      <div className="m-0 p-0" key={`${detail.contract}-${detail.tokenId}`}>
+      <div className="m-0 p-0">
         <NFTViewerContainer>
-          <NFTViewer url={detail.url}></NFTViewer>
+          <NFTViewer url={data.image}></NFTViewer>
         </NFTViewerContainer>
         <Link
-          to={`/detail/${detail.contract}/${detail.id}`}
+          to={`/detail/${data.contract}/${data.tokenId}`}
           state={{
             account,
             from: "profile",
@@ -42,10 +29,10 @@ const NFT = memo(
           }}
         >
           <div className="font-14 color-cBlack mt-3 font-medium leading-[1.125rem]">
-            {detail.name}
+            {data.name}
           </div>
         </Link>
-        <div className="font-12 mt-1">#{detail.id}</div>
+        <div className="font-12 mt-1">#{data.tokenId}</div>
       </div>
     );
   }
@@ -120,7 +107,7 @@ const NFTsComponent: React.FC<{ account: string | undefined }> = ({
       </div>
       <div className="grid grid-cols-2 gap-[0.9375rem]">
         {NFTs.list.map((d) => (
-          <NFT data={d} account={account} />
+          <NFT data={d} account={account} key={`${d.contract}-${d.tokenId}`} />
         ))}
       </div>
     </>

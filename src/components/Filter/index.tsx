@@ -90,8 +90,8 @@ export default memo(
         >
           <div className="flex h-full flex-col">
             <div className="mb-3 shrink-0">
-              <div className="item control">
-                <span onClick={handleSelectAll}>
+              <div className="item control" onClick={handleSelectAll}>
+                <span>
                   <img
                     src="/square.svg"
                     className={`h-[1.125rem] w-[1.125rem] ${
